@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For My Love ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,"Segoe UI",Arial;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+}
+
+body{
+  background:linear-gradient(135deg,#ffe0ec,#fff7d6);
+  display:flex;
+  justify-content:center;
+  padding:16px;
+  min-height:100dvh;
+}
+
+/* CARD */
+.card{
+  width:100%;
+  max-width:420px;
+  background:#ffffffee;
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 12px 28px rgba(0,0,0,.15);
+  margin:auto 0;
+  animation:fadeIn .5s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.95)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.hidden{display:none}
+
+h1{
+  font-size:clamp(20px,5vw,26px);
+  color:#ff2d6f;
+  margin-bottom:10px;
+}
+
+p{
+  font-size:clamp(14px,4vw,16px);
+  color:#444;
+  margin:8px 0;
+}
+
+.small{font-size:12px;opacity:.85}
+
+/* BUTTONS */
+.btns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  margin-top:14px;
+}
+
+button{
+  flex:1 1 140px;
+  max-width:180px;
+  border:none;
+  padding:14px;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.yes{background:#22c55e;color:#fff}
+.no{background:#ef4444;color:#fff}
+
+input{
+  width:100%;
+  padding:14px;
+  font-size:16px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  margin-top:12px;
+}
+
+.pill{
+  background:#111827;
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  margin-top:14px;
+  font-size:14px;
+}
+
+/* PHOTO */
+.love-img{
+  width:100%;
+  max-width:320px;
+  margin:16px auto 0;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  animation:imgFade 1.2s ease forwards;
+}
+
+@keyframes imgFade{
+  from{opacity:0;transform:scale(.9)}
+  to{opacity:1;transform:scale(1)}
+}
+
+/* HEARTS */
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:999;
+}
+
+.heart{
+  position:absolute;
+  bottom:-20px;
+  animation:floatUp linear forwards;
+  opacity:0.8;
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(1);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-110vh) scale(1.6);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<!-- SCREEN 1 -->
+<div class="card" id="s1">
+  <h1>My Love, will you be my Valentine? ❤️</h1>
+  <p class="small">I made something special for you 😌</p>
+  <p>Choose wisely… my heart is on the line 😭💘</p>
+
+  <div class="btns">
+    <button class="yes" onclick="go(2)">Yes 😍</button>
+    <button class="no" id="noBtn" onclick="noMove()">No 😏</button>
+  </div>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="card hidden" id="s2">
+  <h1>Smart choice 😌💖</h1>
+
+  <p>Who is the cutest?</p>
+  <div class="btns">
+    <button class="yes" onclick="correct()">You 🥺</button>
+    <button class="no" onclick="wrong()">Me 😎</button>
+  </div>
+
+  <p>Go on a date with me?</p>
+  <div class="btns">
+    <button class="yes" onclick="correct()">Yes 💃</button>
+    <button class="no" onclick="wrong()">No 🙃</button>
+  </div>
+
+  <p>How much you love me?</p>
+  <div class="btns">
+    <button class="yes" onclick="go(3)">Infinite ♾️❤️</button>
+    <button class="no" onclick="wrong()">Little 🤏</button>
+  </div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="card hidden" id="s3">
+  <h1>One last thing 😳💌</h1>
+  <p>Your name 💖</p>
+  <input id="name" placeholder="Type here..." />
+  <button class="yes" style="width:100%;margin-top:16px" onclick="finish()">
+    Continue 💘
+  </button>
+</div>
+
+<!-- SCREEN 4 -->
+<div class="card hidden" id="s4">
+  <h1>YAYYYY 🎉🥳</h1>
+  <p id="msg">Best decision ever 💖</p>
+
+  <img src="love.jpg" alt="Us ❤️" class="love-img">
+
+  <div class="pill">
+    “I don’t need special days to love you…  
+    I choose you every day ❤️”
+  </div>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));
+  document.getElementById("s"+n).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+let count=0;
+function noMove(){
+  const b=document.getElementById("noBtn");
+  const t=["No? 😭","Please 🥺","Don’t 💔","Last chance 😤","Okay 😂"];
+  b.textContent=t[Math.min(count++,t.length-1)];
+}
+
+function wrong(){ alert("Wrong 😌❤️ Try again"); }
+function correct(){ alert("Correct 😭❤️"); }
+
+function finish(){
+  const name=document.getElementById("name").value.trim()||"My Love";
+  document.getElementById("msg").textContent=name+", best decision ever 💖";
+  go(4);
+  startHearts();
+}
+
+function startHearts(){
+  const c=document.getElementById("hearts");
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent=["❤️","💖","💕","💘","😍"][Math.floor(Math.random()*5)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=16+Math.random()*24+"px";
+    h.style.animationDuration=3+Math.random()*3+"s";
+    c.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },250);
+}
+</script>
+
+</body>
+</html>
